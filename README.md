@@ -67,20 +67,10 @@ http {
     listen 443 ssl http2;
     server_name groq.jcorrado.dev;
 
-    ssl_certificate /etc/nginx/ssl/fullchain.crt;
-    ssl_certificate_key /etc/nginx/ssl/private.key;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
-    ssl_prefer_server_ciphers on;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-
     location / {
       proxy_pass https://api.groq.com;
       proxy_set_header Host api.groq.com;
       proxy_ssl_server_name on;
-      proxy_ssl_verify on;
-      proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
 
       add_header X-Proxy $hostname always;
     }
